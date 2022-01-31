@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cut and Mute</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="static/style.css" />
+  </head>
+
+  <body>
+    <main class="container">
+      <h1 class="center-align">AslıVideoEditor</h1>
+      <div class="row">
+        <p>
+          <i class="material-icons">attach_file</i> Drag your video or click in
+          this area.
+        </p>
+
+        <filediv class="col s12 row">
+          <input type="file" class="col s3" id="file" />
+        </filediv>
+
+        <video src="" controls id="video" class="col s8 offset-s2"></video>
+      </div>
+
+      <div class="row" id="btnDiv">
+        <a class="btn col s3 offset-s2 green darken-3" id="timebtn"
+          >Save the Time</a
+        >
+      </div>
+      <div class="row">
+        <a id="times" class="btn purple col s6">Crop It</a>
+        <a class="btn col s6 purple darken-3" id="clearbtn">Clear</a>
+      </div>
+    </main>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="static/script.js"></script>
+</html>

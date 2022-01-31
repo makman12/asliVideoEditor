@@ -1,0 +1,54 @@
+body {
+  background-color: #2c061f;
+}
+
+h1 {
+  color: #d89216;
+}
+
+p {
+  color: #e1d89f;
+}
+
+.red .green {
+  background-color: #e9a6a6 !important;
+}
+
+#file {
+  width: 100%;
+  height: 7rem;
+}
+
+filediv {
+  border: 4px dashed #d89216;
+  background-color: #374045 !important;
+}
+filediv p {
+  color: #ffffff;
+  font-family: Arial;
+}
+filediv input {
+  outline: none;
+  opacity: 0;
+}
+filediv button {
+  margin: 0;
+  color: #fff;
+  background: #16a085;
+  border: none;
+  width: 508px;
+  height: 35px;
+  margin-top: -20px;
+  margin-left: -4px;
+  border-radius: 4px;
+  border-bottom: 4px solid #117a60;
+  transition: all 0.2s ease;
+  outline: none;
+}
+filediv button:hover {
+  background: #149174;
+  color: #0c5645;
+}
+filediv button:active {
+  border: 0;
+}
