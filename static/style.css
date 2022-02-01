@@ -2,8 +2,18 @@ body {
   background-color: #2c061f;
 }
 
+#square {
+  position: absolute;
+  border: #0c5645;
+  border-style: double;
+}
+
 h1 {
   color: #d89216;
+}
+
+video {
+  padding: 0px !important;
 }
 
 p {

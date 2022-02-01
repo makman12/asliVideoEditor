@@ -119,7 +119,11 @@ document.getElementById("clearbtn").addEventListener("click", (e) => {
 let cropBtn = document.getElementById("times");
 
 cropBtn.addEventListener("click", function (e) {
-  axios.post("times", getTimes()).then((res) => {
+  let kes = false;
+  if (y2 != 0) {
+    kes = [x1, x2, y1, y2];
+  }
+  axios.post("times", { data: getTimes(), kes: kes }).then((res) => {
     console.log(res.data);
     for (let i of res.data.data) {
       downloadURI(i);
@@ -136,3 +140,75 @@ function downloadURI(uri, name) {
   document.body.removeChild(link);
   delete link;
 }
+
+let x1 = 0;
+let x2 = 0;
+let y1 = 0;
+let y2 = 0;
+function selectPoints(e) {
+  e.preventDefault();
+  // Get the target
+  const target = e.target;
+
+  // Get the bounding rectangle of target
+  const rect = target.getBoundingClientRect();
+
+  // Mouse position
+  let x = e.clientX - rect.left;
+  let y = e.clientY - rect.top;
+  x = x / e.currentTarget.offsetWidth;
+  y = y / e.currentTarget.offsetHeight;
+  if ((x1 == 0) & (y1 == 0)) {
+    x1 = x;
+    y1 = y;
+  } else if ((x2 == 0) & (y2 == 0)) {
+    x2 = x;
+    y2 = y;
+    aud.removeEventListener("click", selectPoints, true);
+    aud.controls = true;
+  }
+  console.log(x, y);
+
+  let state3 = "Please click on <b>bottom-right</b> corner on Video";
+  let state2 = "Please click on <b>top-left</b> corner on Video";
+  if (kesp.innerHTML == state3) {
+    kesp.innerHTML = "Saved!";
+    aud.style.cursor = "";
+    kesbtn.innerHTML = "Click to re-crop";
+  } else if (kesp.innerHTML == state2) {
+    kesp.innerHTML = state3;
+  }
+}
+
+const kesbtn = document.getElementById("kesbtn");
+const kesp = document.getElementById("kesp");
+
+let CropPositions = [];
+kesbtn.addEventListener("click", (e) => {
+  if (kesp.innerHTML == "Saved!") {
+    x1 = 0;
+    x2 = 0;
+    y1 = 0;
+    y2 = 0;
+    kesbtn.innerText = "Crop";
+  }
+  let state2 = "Please click on <b>top-left</b> corner on Video";
+  kesp.innerHTML = state2;
+  aud.controls = false;
+  aud.addEventListener("mousedown", selectPoints);
+  aud.style.cursor = "crosshair";
+});
+
+/*
+let state1 = "";
+  let state2 = "Please click on <b>top-left</b> corner on Video";
+  let state3 = "Please click on <b>bottom-right</b> corner on Video";
+  if (kesp.innerHTML == state1) {
+    kesp.innerHTML = state2;
+  } else if (kesp.innerHTML == state2) {
+    kesp.innerHTML = state3;
+    kesbtn.innerText = "Click to re-crop";
+  } else if (kesp.innerHTML == state3) {
+    kesp.innerHTML = state2;
+  }
+  */

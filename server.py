@@ -2,12 +2,19 @@
 from flask import Flask, request,redirect, url_for,render_template, jsonify, send_file
 import os
 from moviepy.editor import *
+from moviepy.video.fx.all import crop
 
 
 app = Flask(__name__,static_url_path='/static')
 app.config['UPLOAD_FOLDER'] = app.root_path + "/static"
 
-def videoMuteCrop(name,dur):
+
+def cropVideoWithPercentage(c,x1,x2,y1,y2):
+    w, h = c.size
+    d=crop(c, x1=x1*w, y1=y1*h, x2=x2*w, y2=y2*h)
+    return d
+
+def videoMuteCrop(name,dur, kes=False):
     print(name,dur)
     num=int(len(dur)/2)
     paths=[]
@@ -19,6 +26,11 @@ def videoMuteCrop(name,dur):
         duration = clip.duration
         speed= duration/3
         clip=clip.fx( vfx.speedx, speed)
+        print("buraya geldim",kes)
+        if kes:
+            print("kesiyorum")
+            x1,x2,y1,y2 = (kes)
+            clip=cropVideoWithPercentage(clip, x1, x2, y1, y2)
         clip.write_videofile(app.config['UPLOAD_FOLDER']+ "/" +f"{name.split('.')[0]}-{start}-{end}.mp4")
         path= "static/" +f"{name.split('.')[0]}-{start}-{end}.mp4"
         paths.append(path)
@@ -34,7 +46,6 @@ def postdata():
     print(name)
 
     if request.files:
-        print("Başarılı Dosya Geldi")
         name = request.files["file"].filename
         full_filename = os.path.join(app.config['UPLOAD_FOLDER'], name)
         request.files["file"].save(full_filename)
@@ -44,9 +55,10 @@ def postdata():
 @app.route('/times', methods=["POST"])    
 def sendTimes():
     request_data = request.get_json()
-    dur=request_data["data"]
-    print(name)
-    result=videoMuteCrop(name,dur)
+    dur=request_data["data"]["data"]
+    kes= request_data["kes"]
+    print("Editing Started.................",kes)
+    result=videoMuteCrop(name,dur, kes)
     return ({"data":result})
 
 if __name__=="__main__":

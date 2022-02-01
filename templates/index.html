@@ -29,6 +29,10 @@
         <filediv class="col s12 row">
           <input type="file" class="col s3" id="file" />
         </filediv>
+        <div class="row">
+          <a id="kesbtn" class="btn purple col s3">Crop</a>
+          <p class="col s9" id="kesp"></p>
+        </div>
 
         <video src="" controls id="video" class="col s8 offset-s2"></video>
       </div>
@@ -39,11 +43,12 @@
         >
       </div>
       <div class="row">
-        <a id="times" class="btn purple col s6">Crop It</a>
+        <a id="times" class="btn purple col s6">Create and Download Clips</a>
         <a class="btn col s6 purple darken-3" id="clearbtn">Clear</a>
       </div>
     </main>
   </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="static/script.js"></script>
 </html>
