@@ -118,17 +118,26 @@ document.getElementById("clearbtn").addEventListener("click", (e) => {
 
 let cropBtn = document.getElementById("times");
 
+let fix;
+const loader = document.getElementById("loader");
 cropBtn.addEventListener("click", function (e) {
   let kes = false;
   if (y2 != 0) {
     kes = [x1, x2, y1, y2];
   }
-  axios.post("times", { data: getTimes(), kes: kes }).then((res) => {
-    console.log(res.data);
-    for (let i of res.data.data) {
-      downloadURI(i);
-    }
-  });
+  if (fix == "") {
+    fix == false;
+  }
+  loader.className = "loader";
+  axios
+    .post("times", { data: getTimes(), kes: kes, fixed: fix })
+    .then((res) => {
+      console.log(res.data);
+      for (let i of res.data.data) {
+        downloadURI(i);
+      }
+      loader.className = "";
+    });
 });
 
 function downloadURI(uri, name) {
@@ -199,16 +208,16 @@ kesbtn.addEventListener("click", (e) => {
   aud.style.cursor = "crosshair";
 });
 
-/*
-let state1 = "";
-  let state2 = "Please click on <b>top-left</b> corner on Video";
-  let state3 = "Please click on <b>bottom-right</b> corner on Video";
-  if (kesp.innerHTML == state1) {
-    kesp.innerHTML = state2;
-  } else if (kesp.innerHTML == state2) {
-    kesp.innerHTML = state3;
-    kesbtn.innerText = "Click to re-crop";
-  } else if (kesp.innerHTML == state3) {
-    kesp.innerHTML = state2;
+const fixedTime = document.getElementById("fixedTime");
+
+fixedTime.addEventListener("change", (e) => {
+  let val = fixedTime.value;
+  fix = val;
+  if (val == 0) {
+    fix = "";
+    fixedTime.placeholder = "Desired Fixed Time In Seconds";
+  } else {
+    fixedTime.placeholder = "Clips Fixed to " + val + " Seconds";
   }
-  */
+  fixedTime.value = "";
+});

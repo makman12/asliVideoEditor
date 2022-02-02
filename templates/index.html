@@ -18,8 +18,17 @@
   </head>
 
   <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a class="brand-logo center">AslıVideoEditor</a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down"></ul>
+      </div>
+    </nav>
+
     <main class="container">
-      <h1 class="center-align">AslıVideoEditor</h1>
+      <br />
+      <br />
+      <br />
       <div class="row">
         <p>
           <i class="material-icons">attach_file</i> Drag your video or click in
@@ -31,7 +40,13 @@
         </filediv>
         <div class="row">
           <a id="kesbtn" class="btn purple col s3">Crop</a>
-          <p class="col s9" id="kesp"></p>
+          <p class="col s6" id="kesp"></p>
+          <input
+            id="fixedTime"
+            class="col s3 no-spin"
+            type="number"
+            placeholder="Desired Fixed Time In Seconds"
+          />
         </div>
 
         <video src="" controls id="video" class="col s8 offset-s2"></video>
@@ -43,8 +58,9 @@
         >
       </div>
       <div class="row">
-        <a id="times" class="btn purple col s6">Create and Download Clips</a>
-        <a class="btn col s6 purple darken-3" id="clearbtn">Clear</a>
+        <a id="times" class="btn purple col s4">Create and Download Clips</a>
+        <a class="btn col s4 purple offset-s4" id="clearbtn">Clear</a>
+        <div class="" id="loader"></div>
       </div>
     </main>
   </body>

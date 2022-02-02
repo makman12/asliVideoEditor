@@ -14,7 +14,7 @@ def cropVideoWithPercentage(c,x1,x2,y1,y2):
     d=crop(c, x1=x1*w, y1=y1*h, x2=x2*w, y2=y2*h)
     return d
 
-def videoMuteCrop(name,dur, kes=False):
+def videoMuteCrop(name,dur, kes, fix):
     print(name,dur)
     num=int(len(dur)/2)
     paths=[]
@@ -23,9 +23,10 @@ def videoMuteCrop(name,dur, kes=False):
         end=dur[1+(i*2)]
         clip = VideoFileClip(app.config['UPLOAD_FOLDER']+ "/" + name).subclip(start, end)
         clip=clip.volumex(0)
-        duration = clip.duration
-        speed= duration/3
-        clip=clip.fx( vfx.speedx, speed)
+        if fix:
+            duration = clip.duration
+            speed= duration/fix
+            clip=clip.fx( vfx.speedx, speed)
         print("buraya geldim",kes)
         if kes:
             print("kesiyorum")
@@ -57,8 +58,9 @@ def sendTimes():
     request_data = request.get_json()
     dur=request_data["data"]["data"]
     kes= request_data["kes"]
+    fix = float(request_data["fixed"])
     print("Editing Started.................",kes)
-    result=videoMuteCrop(name,dur, kes)
+    result=videoMuteCrop(name,dur, kes, fix)
     return ({"data":result})
 
 if __name__=="__main__":
